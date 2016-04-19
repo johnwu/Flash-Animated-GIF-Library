@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   creationComplete="handleCreationComplete(event)"
@@ -27,15 +27,11 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import com.worlize.gif.GIFDecoder;
 			import com.worlize.gif.GIFPlayer;
 			import com.worlize.gif.events.AsyncDecodeErrorEvent;
-			import com.worlize.gif.events.GIFDecoderEvent;
 			import com.worlize.gif.events.GIFPlayerEvent;
 			
 			import mx.events.FlexEvent;
-			
-			import spark.primitives.Graphic;
 			private var ref:FileReference;
 			
 			[Bindable]
@@ -134,4 +130,4 @@
 	
 	<s:SpriteVisualElement id="gifContainer" />
 	
-</s:Application>
+</s:WindowedApplication>
