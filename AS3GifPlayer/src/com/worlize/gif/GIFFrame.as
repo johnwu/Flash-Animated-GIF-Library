@@ -16,8 +16,6 @@
 
 package com.worlize.gif
 {
-	import com.worlize.gif.blocks.ColorTableBlock;
-	import com.worlize.gif.blocks.ImageDescriptorBlock;
 	import com.worlize.gif.events.AsyncDecodeErrorEvent;
 	import com.worlize.gif.events.GIFDecoderEvent;
 	

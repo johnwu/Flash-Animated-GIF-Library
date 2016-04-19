@@ -16,13 +16,11 @@
 
 package com.worlize.gif.blocks
 {
-	import com.worlize.gif.errors.FileTypeError;
 	import com.worlize.gif.errors.OutOfDataError;
 	
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	import flash.utils.IDataInput;
-	import flash.utils.IDataOutput;
 
 	public class DataBlock implements IGIFBlockCodec
 	{

@@ -28,7 +28,6 @@ package com.worlize.gif
 	import com.worlize.gif.blocks.NetscapeExtension;
 	import com.worlize.gif.blocks.PlainTextExtension;
 	import com.worlize.gif.blocks.TrailerBlock;
-	import com.worlize.gif.blocks.UnknownExtension;
 	import com.worlize.gif.constants.BlockType;
 	import com.worlize.gif.constants.DefaultPalette;
 	import com.worlize.gif.constants.DisposalType;
@@ -39,13 +38,8 @@ package com.worlize.gif
 	
 	import flash.display.BitmapData;
 	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
-	import flash.filters.GlowFilter;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	

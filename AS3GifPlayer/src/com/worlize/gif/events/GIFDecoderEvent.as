@@ -16,8 +16,6 @@
 
 package com.worlize.gif.events
 {
-	import com.worlize.gif.GIFFrame;
-	
 	import flash.events.Event;
 	
 	public class GIFDecoderEvent extends Event

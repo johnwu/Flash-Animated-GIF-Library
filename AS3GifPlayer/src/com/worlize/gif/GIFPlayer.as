@@ -16,17 +16,13 @@
 
 package com.worlize.gif
 {
-	import com.worlize.gif.constants.DisposalType;
 	import com.worlize.gif.events.AsyncDecodeErrorEvent;
 	import com.worlize.gif.events.GIFDecoderEvent;
 	import com.worlize.gif.events.GIFPlayerEvent;
 	
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
-	import flash.geom.Matrix;
-	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import flash.utils.Timer;
 
