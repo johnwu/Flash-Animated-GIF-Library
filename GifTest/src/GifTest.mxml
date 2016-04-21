@@ -27,7 +27,7 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import com.worlize.gif.GIFPlayer;
+			import com.worlize.gif.GIFEngine;
 			import com.worlize.gif.events.AsyncDecodeErrorEvent;
 			import com.worlize.gif.events.GIFPlayerEvent;
 			
@@ -35,7 +35,7 @@
 			private var ref:FileReference;
 			
 			[Bindable]
-			private var player:GIFPlayer = new GIFPlayer();
+			private var engine:GIFEngine;
 			
 			private var startTime:uint;
 			
@@ -45,12 +45,12 @@
 			
 			protected function handleCreationComplete(event:FlexEvent):void
 			{
+				engine = new GIFEngine(gifContainer);
+				
 				ref = new FileReference();
 				ref.addEventListener(Event.SELECT, handleFileSelect);
 				ref.addEventListener(Event.CANCEL, handleFileCancel);
 				ref.addEventListener(Event.COMPLETE, handleFileLoaded);
-				gifContainer.addChild(player);
-				player.smoothing = false;
 			}
 			
 			private function handleFileSelect(event:Event):void {
@@ -65,10 +65,10 @@
 				trace("File loaded.  " + ref.data.length + " bytes.");
 				startTime = (new Date()).valueOf();
 
-				player.addEventListener(GIFPlayerEvent.COMPLETE, handleGifLoadComplete);
-				player.addEventListener(AsyncDecodeErrorEvent.ASYNC_DECODE_ERROR, handleAsyncDecodeErrorEvent);
-				player.addEventListener(GIFPlayerEvent.FRAME_RENDERED, handleFrameRendered);
-				player.loadBytes(ref.data);
+				engine.addEventListener(GIFPlayerEvent.COMPLETE, handleGifLoadComplete);
+				engine.addEventListener(AsyncDecodeErrorEvent.ASYNC_DECODE_ERROR, handleAsyncDecodeErrorEvent);
+				engine.addEventListener(GIFPlayerEvent.FRAME_RENDERED, handleFrameRendered);
+				engine.loadBytes(ref.data);
 			}
 			
 			private function handleAsyncDecodeErrorEvent(event:AsyncDecodeErrorEvent):void {
@@ -84,26 +84,12 @@
 			}
 
 			protected function handleFrameSkipChange(event:Event):void {
-				player.enableFrameSkipping = (event.target as CheckBox).selected;
-			}
-			
-			protected function handleScaleChange(event:Event):void {
-				var scale:Number = (event.target as HSlider).value;
-				
-				player.scaleX = player.scaleY = scale;
+				engine.enableFrameSkipping = (event.target as CheckBox).selected;
 			}
 			
 			protected function handleFrameChange(event:Event):void {
 				var frame:Number = (event.target as HSlider).value;
-				player.gotoAndStop(frame);
-			}
-			
-			protected function removeFromStage():void {
-				gifContainer.removeChildren();
-			}
-			
-			protected function addToStage():void {
-				gifContainer.addChild(player);
+				engine.gotoAndStop(frame);
 			}
 			
 		]]>
@@ -115,19 +101,12 @@
 	
 	<s:HGroup>
 		<s:Button label="Open..." click="handleOpenClick()" />
-		<s:CheckBox label="Enable Frame Skipping" selected="{player.enableFrameSkipping}" change="handleFrameSkipChange(event)" enabled="{player.ready}" />
-		<s:HSlider width="100" value="1.0" minimum="0.5" maximum="3.0" stepSize="0.05" change="handleScaleChange(event)" enabled="{player.ready}" />
+		<s:CheckBox label="Enable Frame Skipping" selected="{engine.enableFrameSkipping}" change="handleFrameSkipChange(event)" enabled="{engine.ready}" />
 	</s:HGroup>
-	<s:HGroup enabled="{player.ready}">
-		<s:Button label="Play" click="player.play()" />
-		<s:Button label="Pause" click="player.stop()" />
-		<s:HSlider minimum="1" maximum="{player.totalFrames}" stepSize="1" change="handleFrameChange(event)" value="{player.currentFrame}" />
-		<s:Button label="Remove From Stage" click="removeFromStage()" />
-		<s:Button label="Add To Stage" click="addToStage()" />
+	<s:HGroup enabled="{engine.ready}">
+		<s:Button label="Play" click="engine.play()" />
+		<s:Button label="Pause" click="engine.stop()" />
+		<s:HSlider minimum="1" maximum="{engine.totalFrames}" stepSize="1" change="handleFrameChange(event)" value="{engine.currentFrame}" />
 	</s:HGroup>
-	
-	
-	
-	<s:SpriteVisualElement id="gifContainer" />
-	
+	<s:BitmapImage id="gifContainer" width="100%" height="100%" scaleMode="letterbox" fillMode="scale" verticalAlign="middle" horizontalAlign="center" />
 </s:WindowedApplication>
