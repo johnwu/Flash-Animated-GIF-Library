@@ -27,6 +27,7 @@
     <classEntry path="com.worlize.gif.blocks.TrailerBlock"/>
     <classEntry path="com.worlize.gif.GIFPlayer"/>
     <classEntry path="com.worlize.gif.events.GIFPlayerEvent"/>
+    <classEntry path="com.worlize.gif.GIFEngine"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
