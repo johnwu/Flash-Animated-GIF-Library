@@ -160,7 +160,7 @@ package com.worlize.gif
 			// single-frame file, nothing to play but we can
 			// render the first frame.
 			if (_frameCount === 1) {
-				goto(0);
+				goToFrame(0);
 			}
 			else {
 				timer.start();
