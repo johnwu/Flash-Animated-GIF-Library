@@ -109,6 +109,13 @@ package com.worlize.gif
 		public function cleanup():void {
 			data.clear();
 			data = null;
+			header = null;
+			lsd = null;
+			graphicControlExtension = null;
+			globalColorTable = null;
+			fallbackColorTable = null;
+			activeColorTable = null;
+			
 			for (var i:int = 0; i < blockSequence.length; i++) {
 				blockSequence[i].dispose();
 			}
@@ -363,6 +370,11 @@ package com.worlize.gif
 			return frame;
 		}
 		
+		protected function releaseFrameListeners(frame:GIFFrame):void
+		{
+			frame.removeEventListener(GIFDecoderEvent.DECODE_COMPLETE, handleFrameDecodeComplete);
+			frame.removeEventListener(AsyncDecodeErrorEvent.ASYNC_DECODE_ERROR, handleFrameAsyncDecodeError);			
+		}
 		
 		protected function renderCompositedFrames():void {
 			var startTime:uint = (new Date()).valueOf();
@@ -449,6 +461,7 @@ package com.worlize.gif
 		}
 		
 		protected function handleFrameDecodeComplete(event:GIFDecoderEvent):void {
+			releaseFrameListeners(event.target as GIFFrame);
 			frameDecodedCount ++;
 			if (frameDecodedCount === framesToDecode && !_hasError) {
 				renderCompositedFrames();
@@ -462,6 +475,7 @@ package com.worlize.gif
 		}
 		
 		protected function handleFrameAsyncDecodeError(event:AsyncDecodeErrorEvent):void {
+			releaseFrameListeners(event.target as GIFFrame);
 			abortDecode();
 			var errorEvent:AsyncDecodeErrorEvent = new AsyncDecodeErrorEvent(AsyncDecodeErrorEvent.ASYNC_DECODE_ERROR);
 			errorEvent.text = "An error was encountered while Flash was decoding an image frame.";

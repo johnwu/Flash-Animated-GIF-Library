@@ -221,7 +221,9 @@ package com.worlize.gif
 		{
 			if (_frames === null) { return; }
 			for (var i:int = 0; i < _frames.length; i ++) {
-				_frames[i].bitmapData.dispose();
+				var f:GIFFrame = _frames[i] as GIFFrame;
+				f.abortDecode();
+				f.bitmapData.dispose();
 			}			
 		}
 		
