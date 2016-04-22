@@ -12,8 +12,6 @@ package com.worlize.gif
 	
 	import mx.core.FlexGlobals;
 	
-	import spark.primitives.BitmapImage;
-	
 	[Event(name="complete",type="com.worlize.gif.events.GIFPlayerEvent")]
 	[Event(name="frameRendered",type="com.worlize.gif.events.GIFPlayerEvent")]
 	[Event(name="asyncDecodeError",type="com.worlize.gif.events.AsyncDecodeErrorEvent")]
@@ -37,13 +35,15 @@ package com.worlize.gif
 		private var _ready:Boolean = false;
 		private var _imageWidth:Number;
 		private var _imageHeight:Number;
-		private var _display:BitmapImage;
+		private var _display:Object;
 		
-		public function GIFEngine(display:BitmapImage, autoPlay:Boolean = true)
+		public function GIFEngine(display:Object, autoPlay:Boolean = true)
 		{
 			this._display = display;
 			this.autoPlay = autoPlay;
 			super(this);
+			
+			if (!display.hasOwnProperty("source")) throw new Error("Display object does not have source property");			
 		}
 		
 		private function initMinFrameDelay():void {
